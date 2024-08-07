@@ -1,4 +1,6 @@
-const swaggerConfig = {
+import type { OpenAPIV3 } from 'openapi-types'
+
+const swaggerConfig: Omit<OpenAPIV3.Document, 'paths'> = {
 	openapi: '3.0.0',
 	info: {
 		title: 'Raffy API',
