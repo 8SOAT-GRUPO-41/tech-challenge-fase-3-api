@@ -6,10 +6,10 @@ settings:
 
 dependencies:
   '@fastify/swagger':
-    specifier: ^8.14.0
+    specifier: ^8.15.0
     version: 8.15.0
   '@fastify/swagger-ui':
-    specifier: ^4.0.0
+    specifier: ^4.0.1
     version: 4.0.1
   dotenv:
     specifier: ^16.4.5

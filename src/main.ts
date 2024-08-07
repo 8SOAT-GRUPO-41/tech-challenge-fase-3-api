@@ -1,14 +1,6 @@
 import { config } from 'dotenv'
-import Fastify from 'fastify'
-import { makeCustomerController } from './infrastructure/factories/controllers/customer-controller-factory'
+import { HttpServer } from '@/infrastructure/server'
 config()
 
-const fastify = Fastify({
-	logger: true
-})
-
-fastify.post('/customers', makeCustomerController().createCustomer.bind(makeCustomerController()))
-
-fastify.listen({
-	port: 3000
-})
+const server = new HttpServer()
+server.start()
