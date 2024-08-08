@@ -2,7 +2,9 @@ import fastify, { type FastifyInstance } from 'fastify'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
 import swaggerConfig from '@/infrastructure/swagger'
-import errorHandler from './error-handler'
+import errorHandler from '@/infrastructure/http/error-handler'
+
+import customerRoutes from '@/infrastructure/http/routes/customer-routes'
 
 export class HttpServer {
 	private server: FastifyInstance
@@ -18,7 +20,7 @@ export class HttpServer {
 	}
 
 	private async buildRoutes(): Promise<void> {
-		this.server.register(import('@/infrastructure/http/routes/customer-routes'))
+		this.server.register(customerRoutes)
 	}
 
 	private async buildDocs(): Promise<void> {
