@@ -15,24 +15,14 @@ export class CustomerController {
 	) {}
 
 	async createCustomer(request: FastifyRequest, reply: FastifyReply) {
-		try {
-			const input = request.body as CreateCustomerInput
-			const result = await this.createCustomerUseCase.execute(input)
-			return reply.send(result).status(201)
-		} catch (error) {
-			console.error(error)
-			return reply.status(500).send({ message: 'Internal server error' })
-		}
+		const input = request.body as CreateCustomerInput
+		const result = await this.createCustomerUseCase.execute(input)
+		return reply.send(result).status(201)
 	}
 
 	async loadCustomerByCpf(request: FastifyRequest, reply: FastifyReply) {
-		try {
-			const params = request.params as { cpf: string }
-			const result = await this.loadCustomerByCpfUseCase.execute(params.cpf)
-			return reply.send(result.toJSON()).status(200)
-		} catch (error) {
-			console.error(error)
-			return reply.status(500).send({ message: 'Internal server error' })
-		}
+		const params = request.params as { cpf: string }
+		const result = await this.loadCustomerByCpfUseCase.execute(params.cpf)
+		return reply.send(result.toJSON()).status(200)
 	}
 }

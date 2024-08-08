@@ -2,6 +2,7 @@ import fastify, { type FastifyInstance } from 'fastify'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
 import swaggerConfig from '@/infrastructure/swagger'
+import errorHandler from './error-handler'
 
 export class HttpServer {
 	private server: FastifyInstance
@@ -37,6 +38,7 @@ export class HttpServer {
 	async start(): Promise<void> {
 		await this.buildDocs()
 		await this.buildRoutes()
+		this.server.setErrorHandler(errorHandler)
 		this.server.listen({ port: +(process.env.PORT || 3000) })
 	}
 }
