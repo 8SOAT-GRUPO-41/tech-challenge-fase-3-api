@@ -2,6 +2,7 @@ import { ConflictError } from '@/domain/errors/conflict-error'
 import { InvalidParamError } from '@/domain/errors/invalid-param-error'
 import { NotFoundError } from '@/domain/errors/not-found-error'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { HttpStatusCode } from './helper'
 
 enum ErrorCodes {
 	NOT_FOUND = 'NOT_FOUND_ERROR',
@@ -9,7 +10,8 @@ enum ErrorCodes {
 	BAD_REQUEST = 'BAD_REQUEST_ERROR',
 	DOMAIN_VALIDATION = 'DOMAIN_VALIDATION_ERROR',
 	CONFLICT_ERROR = 'CONFLICT_ERROR',
-	DUPLICATE_ENTITY = 'DUPLICATE_ENTITY_ERROR'
+	DUPLICATE_ENTITY = 'DUPLICATE_ENTITY_ERROR',
+	UNPROCESSABLE_ENTITY = 'UNPROCESSABLE_ENTITY_ERROR'
 }
 
 const createErrorResponse = (code: ErrorCodes, message: string, status: number, reply: FastifyReply): void => {
@@ -25,29 +27,34 @@ const errorHandler = (error: unknown, request: FastifyRequest, reply: FastifyRep
 	request.log.error(error)
 
 	if (error instanceof NotFoundError) {
-		createErrorResponse(ErrorCodes.NOT_FOUND, error.message, 404, reply)
+		createErrorResponse(ErrorCodes.NOT_FOUND, error.message, HttpStatusCode.NOT_FOUND, reply)
 		return
 	}
 
 	if ((error as any).code === 'FST_ERR_VALIDATION') {
-		createErrorResponse(ErrorCodes.BAD_REQUEST, (error as any).message || 'Validation error', 400, reply)
+		createErrorResponse(
+			ErrorCodes.BAD_REQUEST,
+			(error as any).message || 'Validation error',
+			HttpStatusCode.BAD_REQUEST,
+			reply
+		)
 		return
 	}
 
 	if (error instanceof InvalidParamError) {
-		createErrorResponse(ErrorCodes.BAD_REQUEST, error.message, 422, reply)
+		createErrorResponse(ErrorCodes.UNPROCESSABLE_ENTITY, error.message, HttpStatusCode.UNPROCESSABLE_ENTITY, reply)
 		return
 	}
 
 	if (error instanceof ConflictError) {
-		createErrorResponse(ErrorCodes.CONFLICT_ERROR, error.message, 409, reply)
+		createErrorResponse(ErrorCodes.CONFLICT_ERROR, error.message, HttpStatusCode.CONFLICT, reply)
 		return
 	}
 
 	createErrorResponse(
 		ErrorCodes.INTERNAL_SERVER_ERROR,
 		(error as Error).message || 'Something unexpected happened',
-		500,
+		HttpStatusCode.SERVER_ERROR,
 		reply
 	)
 }
