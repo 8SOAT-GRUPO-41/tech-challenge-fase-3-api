@@ -17,7 +17,7 @@ export class CustomerController {
 	async createCustomer(request: FastifyRequest, reply: FastifyReply) {
 		const input = request.body as CreateCustomerInput
 		const result = await this.createCustomerUseCase.execute(input)
-		return reply.send(result).status(201)
+		return reply.send(result.toJSON()).status(201)
 	}
 
 	async loadCustomerByCpf(request: FastifyRequest, reply: FastifyReply) {

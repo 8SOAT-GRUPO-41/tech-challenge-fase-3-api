@@ -1,8 +1,5 @@
 import { Price } from '@/domain/value-objects'
-
-const PRODUCT_CATEGORIES = ['Lanche', 'Acompanhamento', 'Bebida', 'Sobremesa'] as const
-
-export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number]
+import type { ProductCategory } from '@/domain/enums'
 
 export class Product {
 	private constructor(

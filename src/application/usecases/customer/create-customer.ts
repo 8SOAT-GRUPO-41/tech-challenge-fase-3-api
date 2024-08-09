@@ -10,10 +10,10 @@ type Input = {
 export class CreateCustomer {
 	constructor(private readonly customerRepository: CustomerRepository) {}
 
-	async execute(params: Input) {
+	async execute(params: Input): Promise<Customer> {
 		const { cpf, email, name } = params
 		const customer = Customer.create(name, email, cpf)
 		await this.customerRepository.save(customer)
-		return customer.toJSON()
+		return customer
 	}
 }
