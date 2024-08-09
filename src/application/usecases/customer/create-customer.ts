@@ -1,5 +1,6 @@
 import type { CustomerRepository } from '@/application/ports/customer-repository'
 import { Customer } from '@/domain/entities'
+import { ConflictError } from '@/domain/errors/conflict-error'
 
 type Input = {
 	name: string
@@ -12,6 +13,10 @@ export class CreateCustomer {
 
 	async execute(params: Input): Promise<Customer> {
 		const { cpf, email, name } = params
+		const findCustomer = await this.customerRepository.findByCpf(cpf)
+		if (findCustomer) {
+			throw new ConflictError('Customer already exists')
+		}
 		const customer = Customer.create(name, email, cpf)
 		await this.customerRepository.save(customer)
 		return customer

@@ -1,3 +1,4 @@
+import { ConflictError } from '@/domain/errors/conflict-error'
 import { InvalidParamError } from '@/domain/errors/invalid-param-error'
 import { NotFoundError } from '@/domain/errors/not-found-error'
 import type { FastifyReply, FastifyRequest } from 'fastify'
@@ -7,6 +8,7 @@ enum ErrorCodes {
 	INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
 	BAD_REQUEST = 'BAD_REQUEST_ERROR',
 	DOMAIN_VALIDATION = 'DOMAIN_VALIDATION_ERROR',
+	CONFLICT_ERROR = 'CONFLICT_ERROR',
 	DUPLICATE_ENTITY = 'DUPLICATE_ENTITY_ERROR'
 }
 
@@ -34,6 +36,11 @@ const errorHandler = (error: unknown, request: FastifyRequest, reply: FastifyRep
 
 	if (error instanceof InvalidParamError) {
 		createErrorResponse(ErrorCodes.BAD_REQUEST, error.message, 422, reply)
+		return
+	}
+
+	if (error instanceof ConflictError) {
+		createErrorResponse(ErrorCodes.CONFLICT_ERROR, error.message, 409, reply)
 		return
 	}
 
