@@ -1,32 +1,52 @@
 import { OrderStatus } from '../enums'
-import type { Product } from './product'
+import { DomainError } from '../errors'
+import { Price } from '../value-objects'
+import type { Customer } from './customer'
+import type { OrderItem } from './order-item'
 
 export class Order {
 	private constructor(
 		readonly orderId: string,
-		private customerId: string,
-		private products: Product[],
-		private status: OrderStatus
-	) {}
+		private customer: Customer,
+		private orderItems: OrderItem[],
+		private status: OrderStatus,
+		private total: Price
+	) {
+		if (orderItems.length === 0) {
+			throw new DomainError('Order must have at least one item')
+		}
+	}
 
-	static create(customerId: string, products: Product[]) {
+	static create(customer: Customer, orderItems: OrderItem[]): Order {
 		const orderId = crypto.randomUUID()
-		return new Order(orderId, customerId, products, OrderStatus.RECEIVED)
+		const total = Order.calculateTotal(orderItems)
+		return new Order(orderId, customer, orderItems, OrderStatus.RECEIVED, new Price(total))
 	}
 
-	static restore(orderId: string, customerId: string, products: Product[], status: OrderStatus) {
-		return new Order(orderId, customerId, products, status)
+	static restore(orderId: string, customer: Customer, orderItems: OrderItem[], status: OrderStatus): Order {
+		const total = Order.calculateTotal(orderItems)
+		return new Order(orderId, customer, orderItems, status, new Price(total))
 	}
 
-	getCustomerId = () => this.customerId
-
-	setProducts = (products: Product[]) => {
-		this.products = products
+	private static calculateTotal(orderItems: OrderItem[]): number {
+		return orderItems.reduce((acc, item) => acc + item.getPrice(), 0)
 	}
 
-	getProducts = () => this.products
+	getCustomer = () => this.customer
+
+	getOrderItems = () => this.orderItems
+
+	setOrderItems = (orderItems: OrderItem[]) => {
+		if (orderItems.length === 0) {
+			throw new DomainError('Order must have at least one item')
+		}
+		this.orderItems = orderItems
+		this.total = new Price(Order.calculateTotal(orderItems))
+	}
 
 	getStatus = () => this.status
+
+	getTotal = () => this.total.getValue()
 
 	private canTransitionTo(status: OrderStatus): boolean {
 		const transitions: Record<OrderStatus, OrderStatus[]> = {
@@ -40,7 +60,7 @@ export class Order {
 
 	private transitionTo(status: OrderStatus) {
 		if (!this.canTransitionTo(status)) {
-			throw new Error(`Can't transition from ${this.status} to ${status}`)
+			throw new DomainError(`Can't transition from ${this.status} to ${status}`)
 		}
 		this.status = status
 	}
@@ -55,5 +75,15 @@ export class Order {
 
 	complete() {
 		this.transitionTo(OrderStatus.COMPLETED)
+	}
+
+	toJSON() {
+		return {
+			orderId: this.orderId,
+			status: this.status,
+			total: this.total.getValue(),
+			customer: this.customer.toJSON(),
+			orderItems: this.orderItems.map((item) => item.toJSON())
+		}
 	}
 }

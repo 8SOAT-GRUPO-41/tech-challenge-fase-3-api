@@ -6,6 +6,7 @@ import errorHandler from '@/infrastructure/http/error-handler'
 
 import customerRoutes from '@/infrastructure/http/routes/customer-routes'
 import productRoutes from './routes/product-routes'
+import orderRoutes from './routes/order-routes'
 
 export class HttpServer {
 	private server: FastifyInstance
@@ -23,6 +24,7 @@ export class HttpServer {
 	private async buildRoutes(): Promise<void> {
 		this.server.register(customerRoutes, { prefix: '/customers' })
 		this.server.register(productRoutes, { prefix: '/products' })
+		this.server.register(orderRoutes, { prefix: '/orders' })
 	}
 
 	private async buildDocs(): Promise<void> {

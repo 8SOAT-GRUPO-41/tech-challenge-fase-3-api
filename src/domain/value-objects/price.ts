@@ -2,7 +2,7 @@ import { InvalidParamError } from '../errors/invalid-param-error'
 
 export class Price {
 	constructor(private readonly price: number) {
-		if (price <= 0) {
+		if (price < 0) {
 			throw new InvalidParamError('Invalid price')
 		}
 	}

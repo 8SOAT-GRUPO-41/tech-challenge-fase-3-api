@@ -29,4 +29,23 @@ export class CustomerRepositoryPostgres implements CustomerRepository {
 			customerQueryResult.cpf
 		)
 	}
+
+	async findById(id: string): Promise<Customer | null> {
+		const sql = 'SELECT customer_id, name, cpf, email FROM customers WHERE customer_id = $1'
+		const params = [id]
+		const result = await this.databaseConnection.query<{
+			customer_id: string
+			name: string
+			cpf: string
+			email: string
+		}>(sql, params)
+		const customerQueryResult = result?.shift()
+		if (!customerQueryResult) return null
+		return Customer.restore(
+			customerQueryResult.customer_id,
+			customerQueryResult.name,
+			customerQueryResult.email,
+			customerQueryResult.cpf
+		)
+	}
 }

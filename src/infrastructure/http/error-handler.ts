@@ -3,12 +3,13 @@ import { InvalidParamError } from '@/domain/errors/invalid-param-error'
 import { NotFoundError } from '@/domain/errors/not-found-error'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { HttpStatusCode } from './helper'
+import { DomainError } from '@/domain/errors'
 
 enum ErrorCodes {
 	NOT_FOUND = 'NOT_FOUND_ERROR',
 	INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
 	BAD_REQUEST = 'BAD_REQUEST_ERROR',
-	DOMAIN_VALIDATION = 'DOMAIN_VALIDATION_ERROR',
+	DOMAIN_ERROR = 'DOMAIN_ERROR',
 	CONFLICT_ERROR = 'CONFLICT_ERROR',
 	DUPLICATE_ENTITY = 'DUPLICATE_ENTITY_ERROR',
 	UNPROCESSABLE_ENTITY = 'UNPROCESSABLE_ENTITY_ERROR'
@@ -28,6 +29,11 @@ const errorHandler = (error: unknown, request: FastifyRequest, reply: FastifyRep
 
 	if (error instanceof NotFoundError) {
 		createErrorResponse(ErrorCodes.NOT_FOUND, error.message, HttpStatusCode.NOT_FOUND, reply)
+		return
+	}
+
+	if (error instanceof DomainError) {
+		createErrorResponse(ErrorCodes.DOMAIN_ERROR, error.message, HttpStatusCode.UNPROCESSABLE_ENTITY, reply)
 		return
 	}
 
