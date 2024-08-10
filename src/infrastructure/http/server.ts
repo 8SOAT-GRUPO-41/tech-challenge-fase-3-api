@@ -21,8 +21,8 @@ export class HttpServer {
 	}
 
 	private async buildRoutes(): Promise<void> {
-		this.server.register(customerRoutes)
-		this.server.register(productRoutes)
+		this.server.register(customerRoutes, { prefix: '/customers' })
+		this.server.register(productRoutes, { prefix: '/products' })
 	}
 
 	private async buildDocs(): Promise<void> {

@@ -5,7 +5,7 @@ const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> 
 	const customerController = makeCustomerController()
 
 	server.post(
-		'/customers',
+		'',
 		{
 			schema: {
 				tags: ['Customers'],
@@ -24,7 +24,7 @@ const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> 
 	)
 
 	server.get(
-		'/customers/:cpf',
+		'/:cpf',
 		{
 			schema: {
 				tags: ['Customers'],
