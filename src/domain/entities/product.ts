@@ -29,8 +29,6 @@ export class Product {
 
 	getPrice = () => this.price.getValue()
 
-	getPriceInCents = () => this.price.getCentsValue()
-
 	getDescription = () => this.description
 
 	setPrice = (price: number) => {

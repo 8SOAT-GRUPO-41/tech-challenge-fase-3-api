@@ -66,6 +66,23 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 		},
 		productController.updateProduct.bind(productController)
 	)
+
+	server.get(
+		'/category/:category',
+		{
+			schema: {
+				tags: ['Products'],
+				params: {
+					type: 'object',
+					properties: {
+						category: { type: 'string', enum: ['Lanche', 'Acompanhamento', 'Bebida', 'Sobremesa'] }
+					},
+					required: ['category']
+				}
+			}
+		},
+		productController.loadProductsByCategory.bind(productController)
+	)
 }
 
 export default productRoutes

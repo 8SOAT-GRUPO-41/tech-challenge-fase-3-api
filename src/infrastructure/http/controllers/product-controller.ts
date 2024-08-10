@@ -1,6 +1,7 @@
 import type { CreateProduct } from '@/application/usecases/product/create-product'
 import type { DeleteProduct } from '@/application/usecases/product/delete-product'
 import type { UpdateProduct } from '@/application/usecases/product/update-product'
+import type { LoadProductsByCategory } from '@/application/usecases/product/load-products-by-category'
 import type { ProductCategory } from '@/domain/enums'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { HttpStatusCode } from '../helper'
@@ -20,7 +21,8 @@ export class ProductController {
 	constructor(
 		private readonly createProductUseCase: CreateProduct,
 		private readonly deleteProductUseCase: DeleteProduct,
-		private readonly updateProductUseCase: UpdateProduct
+		private readonly updateProductUseCase: UpdateProduct,
+		private readonly loadProductsByCategoryUseCase: LoadProductsByCategory
 	) {}
 
 	async createProduct(request: FastifyRequest, reply: FastifyReply) {
@@ -41,5 +43,11 @@ export class ProductController {
 		const input: UpdateProductInput = { ...body, productId: id }
 		const result = await this.updateProductUseCase.execute(input)
 		return reply.status(HttpStatusCode.OK).send(result.toJSON())
+	}
+
+	async loadProductsByCategory(request: FastifyRequest, reply: FastifyReply) {
+		const { category } = request.params as { category: ProductCategory }
+		const result = await this.loadProductsByCategoryUseCase.execute(category)
+		return reply.status(HttpStatusCode.OK).send(result.map((product) => product.toJSON()))
 	}
 }
