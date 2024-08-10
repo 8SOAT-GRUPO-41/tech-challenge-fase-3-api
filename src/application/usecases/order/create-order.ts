@@ -29,7 +29,7 @@ export class CreateOrder {
 				if (!product) {
 					throw new NotFoundError('Product not found')
 				}
-				return OrderItem.create(product, quantity, product.getPrice())
+				return OrderItem.create(product, quantity)
 			})
 		)
 		const order = Order.create(customer, orderItems)

@@ -3,19 +3,22 @@ import type { Product } from './product'
 
 export class OrderItem {
 	private constructor(
-		private product: Product,
+		private readonly product: Product,
 		private quantity: number,
 		private price: Price
 	) {}
 
-	static create(product: Product, quantity: number, price: number): OrderItem {
-		const total = quantity * price
+	static create(product: Product, quantity: number): OrderItem {
+		const total = quantity * product.getPrice()
 		return new OrderItem(product, quantity, new Price(total))
 	}
 
-	static restore(product: Product, quantity: number, price: number): OrderItem {
-		return new OrderItem(product, quantity, new Price(price))
+	static restore(product: Product, quantity: number): OrderItem {
+		const total = quantity * product.getPrice()
+		return new OrderItem(product, quantity, new Price(total))
 	}
+
+	getProduct = () => this.product
 
 	getQuantity = () => this.quantity
 
@@ -31,7 +34,7 @@ export class OrderItem {
 
 	toJSON() {
 		return {
-			productId: this.product.toJSON(),
+			product: this.product.toJSON(),
 			quantity: this.quantity,
 			price: this.getPrice()
 		}
