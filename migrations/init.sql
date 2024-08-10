@@ -14,7 +14,9 @@ CREATE TABLE "orders" (
     "order_id" TEXT NOT NULL,
     "customer_id" TEXT NOT NULL,
     "total" INTEGER NOT NULL,
+    "status" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("order_id")
 );
