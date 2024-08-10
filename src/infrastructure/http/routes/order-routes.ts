@@ -4,12 +4,21 @@ import type { FastifyPluginAsync } from 'fastify'
 const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
 	const orderController = makeOrderController()
 
-	server.get('/', orderController.loadOrders.bind(orderController))
+	server.get(
+		'/',
+		{
+			schema: {
+				tags: ['Orders']
+			}
+		},
+		orderController.loadOrders.bind(orderController)
+	)
 
 	server.post(
 		'/',
 		{
 			schema: {
+				tags: ['Orders'],
 				body: {
 					type: 'object',
 					properties: {
@@ -19,7 +28,7 @@ const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => 
 							items: {
 								type: 'object',
 								properties: {
-									id: { type: 'string' },
+									productId: { type: 'string' },
 									quantity: { type: 'number' }
 								}
 							}
