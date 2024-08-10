@@ -37,10 +37,10 @@ const errorHandler = (error: unknown, request: FastifyRequest, reply: FastifyRep
 		return
 	}
 
-	if ((error as any).code === 'FST_ERR_VALIDATION') {
+	if (typeof error === 'object' && (error as { code?: string }).code === 'FST_ERR_VALIDATION') {
 		createErrorResponse(
 			ErrorCodes.BAD_REQUEST,
-			(error as any).message || 'Validation error',
+			(error as { message?: string }).message || 'Validation error',
 			HttpStatusCode.BAD_REQUEST,
 			reply
 		)

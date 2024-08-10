@@ -93,7 +93,7 @@ export class OrderRepositoryPostgres implements OrderRepository {
 			])
 			const orderItems = order.getOrderItems()
 			const values: string[] = []
-			const queryParams: any[] = []
+			const queryParams: unknown[] = []
 			orderItems.forEach((item, index) => {
 				const startIndex = index * 4 + 1
 				values.push(`($${startIndex}, $${startIndex + 1}, $${startIndex + 2}, $${startIndex + 3})`)

@@ -9,7 +9,7 @@ type Input = { orderId: string } & Partial<{
 export class UpdateOrderStatus {
 	constructor(private readonly orderRepository: OrderRepository) {}
 
-	async execute(input: Input): Promise<any> {
+	async execute(input: Input): Promise<void> {
 		const { orderId, status } = input
 		const order = await this.orderRepository.findById(orderId)
 		if (!order) {
