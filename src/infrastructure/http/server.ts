@@ -15,14 +15,12 @@ export class HttpServer {
 	}
 
 	private async buildRoutes(): Promise<void> {
-		console.log('Building routes...')
 		this.server.register(customerRoutes, { prefix: '/customers' })
 		this.server.register(productRoutes, { prefix: '/products' })
 		this.server.register(orderRoutes, { prefix: '/orders' })
 	}
 
 	private async buildDocs(): Promise<void> {
-		console.log('Building docs...')
 		await this.server
 			.register(fastifySwagger, {
 				openapi: swaggerConfig
