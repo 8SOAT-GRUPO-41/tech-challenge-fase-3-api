@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto'
 import { Price } from '@/domain/value-objects'
 import type { ProductCategory } from '@/domain/enums'
 
@@ -11,7 +12,7 @@ export class Product {
 	) {}
 
 	static create(name: string, category: ProductCategory, price: number, description: string) {
-		const productId = crypto.randomUUID()
+		const productId = randomUUID()
 		return new Product(productId, name, category, new Price(price), description)
 	}
 

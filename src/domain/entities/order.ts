@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto'
 import { OrderStatus } from '@/domain/enums'
 import { DomainError } from '@/domain/errors'
 import { Price } from '@/domain/value-objects'
@@ -17,7 +18,7 @@ export class Order {
 	}
 
 	static create(customer: Customer, orderItems: OrderItem[]): Order {
-		const orderId = crypto.randomUUID()
+		const orderId = randomUUID()
 		const total = Order.calculateTotal(orderItems)
 		return new Order(orderId, customer, orderItems, OrderStatus.RECEIVED, new Price(total))
 	}
