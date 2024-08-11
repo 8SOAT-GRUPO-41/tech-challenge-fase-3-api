@@ -13,7 +13,7 @@ RUN pnpm install --frozen-lockfile
 
 COPY --chown=node:node . .
 RUN pnpm run build \
-    && pnpm prune --prod
+    && pnpm prune --prod --ignore-scripts
 
 FROM node:20-alpine
 
@@ -28,7 +28,7 @@ COPY --from=builder --chown=node:node /home/node/node_modules/ ./node_modules/
 COPY --from=builder --chown=node:node /home/node/dist/ ./dist/
 COPY --from=builder --chown=node:node /home/node/entrypoint.sh ./
 
-EXPOSE 4000
+EXPOSE 3000
 
 RUN ["chmod", "+x", "./entrypoint.sh"]
 ENTRYPOINT ["./entrypoint.sh"]
