@@ -11,6 +11,7 @@ const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> 
 		{
 			schema: {
 				tags: ['Customers'],
+				summary: 'Create a new customer',
 				body: {
 					type: 'object',
 					properties: {
@@ -55,6 +56,7 @@ const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> 
 		{
 			schema: {
 				tags: ['Customers'],
+				summary: 'Load a customer by CPF',
 				params: {
 					type: 'object',
 					properties: {

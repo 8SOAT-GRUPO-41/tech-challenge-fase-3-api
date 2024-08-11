@@ -7,10 +7,11 @@ const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => 
 	const orderController = makeOrderController()
 
 	server.get(
-		'/',
+		'',
 		{
 			schema: {
 				tags: ['Orders'],
+				summary: 'List all orders',
 				response: {
 					200: {
 						type: 'array',
@@ -60,10 +61,11 @@ const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => 
 	)
 
 	server.post(
-		'/',
+		'',
 		{
 			schema: {
 				tags: ['Orders'],
+				summary: 'Create a new order',
 				body: {
 					type: 'object',
 					properties: {

@@ -11,6 +11,7 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 		{
 			schema: {
 				tags: ['Products'],
+				summary: 'Create a new product',
 				body: {
 					type: 'object',
 					properties: {
@@ -46,6 +47,7 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 		{
 			schema: {
 				tags: ['Products'],
+				summary: 'Delete a product',
 				params: {
 					type: 'object',
 					properties: {
@@ -68,6 +70,7 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 		{
 			schema: {
 				tags: ['Products'],
+				summary: 'Update a product',
 				params: {
 					type: 'object',
 					properties: {
@@ -108,6 +111,7 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 		{
 			schema: {
 				tags: ['Products'],
+				summary: 'Load products by category',
 				params: {
 					type: 'object',
 					properties: {
