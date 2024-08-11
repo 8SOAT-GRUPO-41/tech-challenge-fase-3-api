@@ -1,7 +1,7 @@
 import fastify, { type FastifyInstance } from 'fastify'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
-import swaggerConfig from '@/infrastructure/swagger'
+import swaggerConfig from '@/infrastructure/swagger/swagger-config'
 import errorHandler from '@/infrastructure/http/error-handler'
 
 import customerRoutes from '@/infrastructure/http/routes/customer-routes'
@@ -45,6 +45,7 @@ export class HttpServer {
 		await this.buildDocs()
 		await this.buildRoutes()
 		this.server.setErrorHandler(errorHandler)
+		await this.server.ready()
 		this.server.listen({ port: +(process.env.PORT || 3000) })
 	}
 }

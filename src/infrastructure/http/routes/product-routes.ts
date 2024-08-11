@@ -1,5 +1,7 @@
 import type { FastifyPluginAsync } from 'fastify'
 import { makeProductController } from '@/infrastructure/factories/controllers/product-controller-factory'
+import { ErrorCodes } from '../error-handler'
+import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 
 const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
 	const productController = makeProductController()
@@ -12,12 +14,27 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 				body: {
 					type: 'object',
 					properties: {
-						name: { type: 'string' },
+						name: { type: 'string', minLength: 3 },
 						price: { type: 'number' },
 						description: { type: 'string' },
 						category: { type: 'string', enum: ['Lanche', 'Acompanhamento', 'Bebida', 'Sobremesa'] }
 					},
 					required: ['name', 'price', 'description', 'category']
+				},
+				response: {
+					201: {
+						type: 'object',
+						properties: {
+							productId: { type: 'string', format: 'uuid' },
+							name: { type: 'string' },
+							price: { type: 'number' },
+							description: { type: 'string' },
+							category: { type: 'string' }
+						}
+					},
+					400: errorResponseSchema(400, ErrorCodes.BAD_REQUEST),
+					422: errorResponseSchema(422, ErrorCodes.UNPROCESSABLE_ENTITY),
+					500: errorResponseSchema(500, ErrorCodes.INTERNAL_SERVER_ERROR)
 				}
 			}
 		},
@@ -32,9 +49,14 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 				params: {
 					type: 'object',
 					properties: {
-						id: { type: 'string' }
+						id: { type: 'string', format: 'uuid' }
 					},
 					required: ['id']
+				},
+				response: {
+					204: {},
+					404: errorResponseSchema(404, ErrorCodes.NOT_FOUND),
+					500: errorResponseSchema(500, ErrorCodes.INTERNAL_SERVER_ERROR)
 				}
 			}
 		},
@@ -49,7 +71,7 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 				params: {
 					type: 'object',
 					properties: {
-						id: { type: 'string' }
+						id: { type: 'string', format: 'uuid' }
 					},
 					required: ['id']
 				},
@@ -61,6 +83,20 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 						description: { type: 'string' },
 						category: { type: 'string', enum: ['Lanche', 'Acompanhamento', 'Bebida', 'Sobremesa'] }
 					}
+				},
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							productId: { type: 'string', format: 'uuid' },
+							name: { type: 'string' },
+							price: { type: 'number' },
+							description: { type: 'string' },
+							category: { type: 'string', enum: ['Lanche', 'Acompanhamento', 'Bebida', 'Sobremesa'] }
+						}
+					},
+					404: errorResponseSchema(404, ErrorCodes.NOT_FOUND),
+					500: errorResponseSchema(500, ErrorCodes.INTERNAL_SERVER_ERROR)
 				}
 			}
 		},
@@ -78,6 +114,23 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 						category: { type: 'string', enum: ['Lanche', 'Acompanhamento', 'Bebida', 'Sobremesa'] }
 					},
 					required: ['category']
+				},
+				response: {
+					200: {
+						type: 'array',
+						items: {
+							type: 'object',
+							properties: {
+								productId: { type: 'string', format: 'uuid' },
+								name: { type: 'string' },
+								price: { type: 'number' },
+								description: { type: 'string' },
+								category: { type: 'string' }
+							}
+						}
+					},
+					400: errorResponseSchema(400, ErrorCodes.BAD_REQUEST),
+					500: errorResponseSchema(500, ErrorCodes.INTERNAL_SERVER_ERROR)
 				}
 			}
 		},

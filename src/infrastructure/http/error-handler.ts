@@ -5,7 +5,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import { HttpStatusCode } from './helper'
 import { DomainError } from '@/domain/errors'
 
-enum ErrorCodes {
+export enum ErrorCodes {
 	NOT_FOUND = 'NOT_FOUND_ERROR',
 	INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
 	BAD_REQUEST = 'BAD_REQUEST_ERROR',
