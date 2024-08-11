@@ -84,7 +84,7 @@ const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => 
 					required: ['customerId', 'products']
 				},
 				response: {
-					200: {
+					201: {
 						type: 'object',
 						properties: {
 							orderId: {
@@ -138,8 +138,8 @@ const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => 
 													example: 'Coca Zero'
 												},
 												price: {
-													type: 'string',
-													example: '9.00'
+													type: 'number',
+													example: 9
 												},
 												description: {
 													type: 'string',

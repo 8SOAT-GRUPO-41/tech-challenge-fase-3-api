@@ -31,12 +31,12 @@ export class ProductRepositoryPostgres implements ProductRepository {
 			product_id: string
 			name: string
 			category: ProductCategory
-			price: number
+			price: string
 			description: string
 		}>(sql, params)
 		const record = result.shift()
 		if (!record) return null
-		return Product.restore(record.product_id, record.name, record.category, record.price, record.description)
+		return Product.restore(record.product_id, record.name, record.category, +record.price, record.description)
 	}
 
 	async update(product: Product) {
