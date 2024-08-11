@@ -15,7 +15,10 @@ const config: Config = {
   moduleNameMapper: {
     '@/tests/(.*)': '<rootDir>/tests/$1',
     '@/(.*)': '<rootDir>/src/$1'
-  }
+  },
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.ts',
+  ]
 };
 
 export default config;
