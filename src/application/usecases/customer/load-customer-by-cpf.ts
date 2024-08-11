@@ -1,6 +1,6 @@
-import type { CustomerRepository } from '@/application/ports/customer-repository'
+import type { CustomerRepository } from '@/application/ports'
 import type { Customer } from '@/domain/entities'
-import { NotFoundError } from '@/domain/errors/not-found-error'
+import { NotFoundError } from '@/domain/errors'
 
 export class LoadCustomerByCpf {
 	constructor(private readonly customerRepository: CustomerRepository) {}

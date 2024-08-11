@@ -1,5 +1,5 @@
-import { makeProductRepository } from '@/infrastructure/factories/repositories/product-repository-factory'
-import { LoadProductsByCategory } from '@/application/usecases/product/load-products-by-category'
+import { makeProductRepository } from '@/infrastructure/factories/repositories'
+import { LoadProductsByCategory } from '@/application/usecases/product'
 
 export const makeLoadProductsByCategory = (): LoadProductsByCategory => {
 	return new LoadProductsByCategory(makeProductRepository())

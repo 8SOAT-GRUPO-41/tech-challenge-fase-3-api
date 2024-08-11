@@ -1,4 +1,4 @@
-import type { OrderRepository } from '@/application/ports/order-repository'
+import type { OrderRepository } from '@/application/ports'
 import type { Order } from '@/domain/entities'
 
 export class LoadOrders {

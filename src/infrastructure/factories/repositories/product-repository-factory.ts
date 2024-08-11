@@ -1,6 +1,6 @@
 import { PostgresDatabaseConnection } from '@/infrastructure/database/postgres-connection'
-import type { ProductRepository } from '@/application/ports/product-repository'
-import { ProductRepositoryPostgres } from '@/infrastructure/repository/postgres/product-repository'
+import { ProductRepositoryPostgres } from '@/infrastructure/repository/postgres'
+import type { ProductRepository } from '@/application/ports'
 
 export const makeProductRepository = (): ProductRepository => {
 	return new ProductRepositoryPostgres(new PostgresDatabaseConnection())

@@ -1,8 +1,7 @@
-import { OrderStatus } from '../enums'
-import { DomainError } from '../errors'
-import { Price } from '../value-objects'
-import type { Customer } from './customer'
-import type { OrderItem } from './order-item'
+import { OrderStatus } from '@/domain/enums'
+import { DomainError } from '@/domain/errors'
+import { Price } from '@/domain/value-objects'
+import type { Customer, OrderItem } from '@/domain/entities'
 
 export class Order {
 	private constructor(

@@ -1,6 +1,6 @@
-import type { OrderRepository } from '@/application/ports/order-repository'
+import type { OrderRepository } from '@/application/ports'
 import { OrderStatus } from '@/domain/enums'
-import { NotFoundError } from '@/domain/errors/not-found-error'
+import { NotFoundError } from '@/domain/errors'
 
 type Input = { orderId: string } & Partial<{
 	status: OrderStatus

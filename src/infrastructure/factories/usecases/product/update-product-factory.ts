@@ -1,5 +1,5 @@
-import { UpdateProduct } from '@/application/usecases/product/update-product'
-import { makeProductRepository } from '../../repositories/product-repository-factory'
+import { makeProductRepository } from '@/infrastructure/factories/repositories'
+import { UpdateProduct } from '@/application/usecases/product'
 
 export const makeUpdateProduct = (): UpdateProduct => {
 	return new UpdateProduct(makeProductRepository())

@@ -1,9 +1,6 @@
-import type { CustomerRepository } from '@/application/ports/customer-repository'
-import type { OrderRepository } from '@/application/ports/order-repository'
-import type { ProductRepository } from '@/application/ports/product-repository'
-import { Order } from '@/domain/entities'
-import { OrderItem } from '@/domain/entities/order-item'
-import { NotFoundError } from '@/domain/errors/not-found-error'
+import type { CustomerRepository, OrderRepository, ProductRepository } from '@/application/ports'
+import { Order, OrderItem } from '@/domain/entities'
+import { NotFoundError } from '@/domain/errors'
 
 type Input = {
 	customerId: string

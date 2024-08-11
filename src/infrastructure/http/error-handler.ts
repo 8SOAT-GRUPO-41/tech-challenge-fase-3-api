@@ -1,9 +1,6 @@
-import { ConflictError } from '@/domain/errors/conflict-error'
-import { InvalidParamError } from '@/domain/errors/invalid-param-error'
-import { NotFoundError } from '@/domain/errors/not-found-error'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { HttpStatusCode } from './helper'
-import { DomainError } from '@/domain/errors'
+import { HttpStatusCode } from '@/infrastructure/http/helper'
+import { DomainError, NotFoundError, InvalidParamError, ConflictError } from '@/domain/errors'
 
 export enum ErrorCodes {
 	NOT_FOUND = 'NOT_FOUND_ERROR',

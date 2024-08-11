@@ -1,10 +1,10 @@
 import type { FastifyPluginAsync } from 'fastify'
-import { makeProductController } from '@/infrastructure/factories/controllers/product-controller-factory'
-import { ErrorCodes } from '../error-handler'
+import { makeProductController } from '@/infrastructure/factories/controllers'
+import { ErrorCodes } from '@/infrastructure/http/error-handler'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 import { productSchema, productSchemaWithoutId } from '@/infrastructure/swagger/schemas/product'
 
-const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
+export const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
 	const productController = makeProductController()
 
 	server.post(
@@ -110,5 +110,3 @@ const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> =
 		productController.loadProductsByCategory.bind(productController)
 	)
 }
-
-export default productRoutes

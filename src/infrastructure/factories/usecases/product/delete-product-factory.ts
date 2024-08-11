@@ -1,5 +1,5 @@
-import { DeleteProduct } from '@/application/usecases/product/delete-product'
-import { makeProductRepository } from '../../repositories/product-repository-factory'
+import { makeProductRepository } from '@/infrastructure/factories/repositories'
+import { DeleteProduct } from '@/application/usecases/product'
 
 export const makeDeleteProduct = (): DeleteProduct => {
 	return new DeleteProduct(makeProductRepository())

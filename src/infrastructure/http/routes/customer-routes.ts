@@ -1,10 +1,10 @@
-import { makeCustomerController } from '@/infrastructure/factories/controllers/customer-controller-factory'
-import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 import type { FastifyPluginAsync } from 'fastify'
-import { ErrorCodes } from '../error-handler'
+import { makeCustomerController } from '@/infrastructure/factories/controllers'
+import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
+import { ErrorCodes } from '@/infrastructure/http/error-handler'
 import { customerSchema, customerSchemaWithoutId } from '@/infrastructure/swagger/schemas/customer'
 
-const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
+export const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
 	const customerController = makeCustomerController()
 
 	server.post(
@@ -63,5 +63,3 @@ const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> 
 		customerController.loadCustomerByCpf.bind(customerController)
 	)
 }
-
-export default customerRoutes

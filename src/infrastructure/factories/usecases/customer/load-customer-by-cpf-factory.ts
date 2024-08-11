@@ -1,5 +1,5 @@
-import { LoadCustomerByCpf } from '@/application/usecases/customer/load-customer-by-cpf'
-import { makeCustomerRepository } from '../../repositories/customer-repository-factory'
+import { makeCustomerRepository } from '@/infrastructure/factories/repositories'
+import { LoadCustomerByCpf } from '@/application/usecases/customer'
 
 export const makeLoadCustomerByCpf = (): LoadCustomerByCpf => {
 	return new LoadCustomerByCpf(makeCustomerRepository())

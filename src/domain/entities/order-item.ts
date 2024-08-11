@@ -1,6 +1,5 @@
-import { Price } from '../value-objects'
-import { OrderItemQuantity } from '../value-objects/order-item-quantity'
-import type { Product } from './product'
+import { Price, OrderItemQuantity } from '@/domain/value-objects'
+import type { Product } from '@/domain/entities'
 
 export class OrderItem {
 	private constructor(

@@ -1,4 +1,4 @@
-import type { ProductRepository } from '@/application/ports/product-repository'
+import type { ProductRepository } from '@/application/ports'
 import type { Product } from '@/domain/entities'
 import type { ProductCategory } from '@/domain/enums'
 

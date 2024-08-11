@@ -1,10 +1,12 @@
-import type { CreateProduct } from '@/application/usecases/product/create-product'
-import type { DeleteProduct } from '@/application/usecases/product/delete-product'
-import type { UpdateProduct } from '@/application/usecases/product/update-product'
-import type { LoadProductsByCategory } from '@/application/usecases/product/load-products-by-category'
-import type { ProductCategory } from '@/domain/enums'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { HttpStatusCode } from '../helper'
+import { HttpStatusCode } from '@/infrastructure/http/helper'
+import type {
+	CreateProduct,
+	DeleteProduct,
+	UpdateProduct,
+	LoadProductsByCategory
+} from '@/application/usecases/product'
+import type { ProductCategory } from '@/domain/enums'
 
 interface CreateProductInput {
 	name: string

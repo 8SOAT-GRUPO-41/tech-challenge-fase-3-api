@@ -1,7 +1,6 @@
-import type { CreateCustomer } from '@/application/usecases/customer/create-customer'
-import type { LoadCustomerByCpf } from '@/application/usecases/customer/load-customer-by-cpf'
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { HttpStatusCode } from '../helper'
+import { HttpStatusCode } from '@/infrastructure/http/helper'
+import type { CreateCustomer, LoadCustomerByCpf } from '@/application/usecases/customer'
 
 interface CreateCustomerInput {
 	name: string

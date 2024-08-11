@@ -1,6 +1,6 @@
-import type { CustomerRepository } from '@/application/ports/customer-repository'
+import type { CustomerRepository } from '@/application/ports'
 import { Customer } from '@/domain/entities'
-import { ConflictError } from '@/domain/errors/conflict-error'
+import { ConflictError } from '@/domain/errors'
 
 type Input = {
 	name: string

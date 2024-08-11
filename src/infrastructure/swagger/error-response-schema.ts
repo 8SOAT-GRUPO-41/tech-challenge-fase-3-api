@@ -1,4 +1,4 @@
-import type { ErrorCodes } from '../http/error-handler'
+import type { ErrorCodes } from '@/infrastructure/http/error-handler'
 
 export const errorResponseSchema = (statusCode: number, errorCode?: ErrorCodes) => ({
 	type: 'object',

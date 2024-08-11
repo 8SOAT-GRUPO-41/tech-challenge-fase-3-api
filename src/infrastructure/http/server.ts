@@ -3,10 +3,7 @@ import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
 import swaggerConfig from '@/infrastructure/swagger/swagger-config'
 import errorHandler from '@/infrastructure/http/error-handler'
-
-import customerRoutes from '@/infrastructure/http/routes/customer-routes'
-import productRoutes from './routes/product-routes'
-import orderRoutes from './routes/order-routes'
+import { customerRoutes, orderRoutes, productRoutes } from '@/infrastructure/http/routes'
 
 export class HttpServer {
 	private server: FastifyInstance

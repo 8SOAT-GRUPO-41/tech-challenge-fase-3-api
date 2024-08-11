@@ -1,7 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { HttpStatusCode } from '../helper'
-import type { LoadOrders } from '@/application/usecases/order/load-orders'
-import type { CreateOrder } from '@/application/usecases/order/create-order'
+import { HttpStatusCode } from '@/infrastructure/http/helper'
+import type { LoadOrders, CreateOrder } from '@/application/usecases/order'
 
 type CreateOrderInput = {
 	customerId: string
