@@ -17,7 +17,7 @@ export class CreateCustomer {
 		if (findCustomer) {
 			throw new ConflictError('Customer already exists')
 		}
-		const customer = Customer.create(name, email, cpf)
+		const customer = Customer.create(cpf, name, email)
 		await this.customerRepository.save(customer)
 		return customer
 	}

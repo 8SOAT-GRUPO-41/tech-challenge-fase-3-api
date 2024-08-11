@@ -3,18 +3,20 @@ import { Email, Cpf } from '@/domain/value-objects'
 export class Customer {
 	private constructor(
 		readonly customerId: string,
-		private name: string,
-		private email: Email,
-		private cpf: Cpf
+		private cpf: Cpf,
+		private name?: string,
+		private email?: Email
 	) {}
 
-	static create(name: string, email: string, cpf: string) {
+	static create(cpf: string, name?: string, email?: string) {
 		const customerId = crypto.randomUUID()
-		return new Customer(customerId, name, new Email(email), new Cpf(cpf))
+		const emailObject = email ? new Email(email) : undefined
+		return new Customer(customerId, new Cpf(cpf), name, emailObject)
 	}
 
-	static restore(customerId: string, name: string, email: string, cpf: string) {
-		return new Customer(customerId, name, new Email(email), new Cpf(cpf))
+	static restore(customerId: string, cpf: string, name?: string, email?: string) {
+		const emailObject = email ? new Email(email) : undefined
+		return new Customer(customerId, new Cpf(cpf), name, emailObject)
 	}
 
 	setName = (name: string) => {
@@ -23,15 +25,15 @@ export class Customer {
 
 	getName = () => this.name
 
-	getEmail = () => this.email.getValue()
+	getEmail = () => this.email?.getValue()
 
 	getCpf = () => this.cpf.getValue()
 
 	toJSON() {
 		return {
 			customerId: this.customerId,
-			name: this.name,
-			email: this.getEmail(),
+			name: this.name || '',
+			email: this.getEmail() || '',
 			cpf: this.getCpf()
 		}
 	}

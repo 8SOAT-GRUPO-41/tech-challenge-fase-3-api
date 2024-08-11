@@ -74,7 +74,7 @@ export class OrderRepositoryPostgres implements OrderRepository {
 			})
 			const order = Order.restore(
 				row.order_id,
-				Customer.restore(row.customer_id, row.customer_name, row.email, row.cpf),
+				Customer.restore(row.customer_id, row.cpf, row.customer_name, row.email),
 				orderItems,
 				row.status
 			)

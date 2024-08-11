@@ -24,9 +24,9 @@ export class CustomerRepositoryPostgres implements CustomerRepository {
 		if (!customerQueryResult) return null
 		return Customer.restore(
 			customerQueryResult.customer_id,
+			customerQueryResult.cpf,
 			customerQueryResult.name,
-			customerQueryResult.email,
-			customerQueryResult.cpf
+			customerQueryResult.email
 		)
 	}
 
@@ -43,9 +43,9 @@ export class CustomerRepositoryPostgres implements CustomerRepository {
 		if (!customerQueryResult) return null
 		return Customer.restore(
 			customerQueryResult.customer_id,
+			customerQueryResult.cpf,
 			customerQueryResult.name,
-			customerQueryResult.email,
-			customerQueryResult.cpf
+			customerQueryResult.email
 		)
 	}
 }
