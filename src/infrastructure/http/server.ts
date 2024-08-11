@@ -10,7 +10,15 @@ export class HttpServer {
 
 	constructor() {
 		this.server = fastify({
-			logger: true
+			logger:
+				process.env.NODE_ENV === 'development'
+					? {
+							transport: {
+								target: 'pino-pretty'
+							},
+							level: 'debug'
+						}
+					: true
 		})
 	}
 
