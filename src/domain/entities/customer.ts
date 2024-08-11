@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto'
 import { Email, Cpf } from '@/domain/value-objects'
 
 export class Customer {
@@ -9,7 +10,7 @@ export class Customer {
 	) {}
 
 	static create(cpf: string, name?: string, email?: string) {
-		const customerId = crypto.randomUUID()
+		const customerId = randomUUID()
 		const emailObject = email ? new Email(email) : undefined
 		return new Customer(customerId, new Cpf(cpf), name, emailObject)
 	}
