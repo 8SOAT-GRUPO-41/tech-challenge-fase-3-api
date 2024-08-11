@@ -58,11 +58,11 @@ export class ProductRepositoryPostgres implements ProductRepository {
 			product_id: string
 			name: string
 			category: ProductCategory
-			price: number
+			price: string
 			description: string
 		}>(sql, params)
 		return result.map((record) =>
-			Product.restore(record.product_id, record.name, record.category, record.price, record.description)
+			Product.restore(record.product_id, record.name, record.category, +record.price, record.description)
 		)
 	}
 }

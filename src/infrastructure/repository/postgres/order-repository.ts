@@ -17,7 +17,7 @@ interface OrderQueryResult {
 		product_name: string
 		category: ProductCategory
 		description: string
-		item_price: number
+		item_price: string
 		quantity: number
 	}>
 }
@@ -65,7 +65,7 @@ export class OrderRepositoryPostgres implements OrderRepository {
 						product.product_id,
 						product.product_name,
 						product.category,
-						product.item_price,
+						+product.item_price,
 						product.description
 					),
 					product.quantity
