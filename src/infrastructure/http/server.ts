@@ -34,11 +34,7 @@ export class HttpServer {
 				openapi: swaggerConfig
 			})
 			.register(fastifySwaggerUI, {
-				routePrefix: '/docs',
-				uiConfig: {
-					deepLinking: false,
-					docExpansion: 'list'
-				}
+				routePrefix: '/docs'
 			})
 	}
 
