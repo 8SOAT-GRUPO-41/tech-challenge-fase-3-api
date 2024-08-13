@@ -1,5 +1,4 @@
 import { Customer } from '@/domain/entities/customer'
-import { InvalidParamError } from '@/domain/errors'
 
 jest.mock('node:crypto', () => ({
 	randomUUID: jest.fn().mockReturnValue('unique-id')
