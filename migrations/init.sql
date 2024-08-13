@@ -1,4 +1,6 @@
 CREATE TYPE order_status AS ENUM (
+    'AWAITING_PAYMENT',
+    'PAID',
     'RECEIVED',
     'IN_PREPARATION',
     'READY',
@@ -27,7 +29,7 @@ CREATE TABLE "orders" (
     "order_id" TEXT NOT NULL,
     "customer_id" TEXT NOT NULL,
     "total" DECIMAL(10, 2) NOT NULL,
-    "status" order_status NOT NULL,
+    "status" order_status NOT NULL DEFAULT "AWAITING_PAYMENT",
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("order_id"),

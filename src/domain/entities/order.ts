@@ -1,89 +1,112 @@
-import { randomUUID } from 'node:crypto'
-import { OrderStatus } from '@/domain/enums'
-import { DomainError } from '@/domain/errors'
-import { Price } from '@/domain/value-objects'
-import type { Customer, OrderItem } from '@/domain/entities'
+import { randomUUID } from "node:crypto";
+import { OrderStatus } from "@/domain/enums";
+import { DomainError } from "@/domain/errors";
+import { Price } from "@/domain/value-objects";
+import type { Customer, OrderItem } from "@/domain/entities";
 
 export class Order {
-	private constructor(
-		readonly orderId: string,
-		private customer: Customer,
-		private orderItems: OrderItem[],
-		private status: OrderStatus,
-		private total: Price
-	) {
-		if (orderItems.length === 0) {
-			throw new DomainError('Order must have at least one item')
-		}
-	}
+  private constructor(
+    readonly orderId: string,
+    private customer: Customer,
+    private orderItems: OrderItem[],
+    private status: OrderStatus,
+    private total: Price
+  ) {
+    if (orderItems.length === 0) {
+      throw new DomainError("Order must have at least one item");
+    }
+  }
 
-	static create(customer: Customer, orderItems: OrderItem[]): Order {
-		const orderId = randomUUID()
-		const total = Order.calculateTotal(orderItems)
-		return new Order(orderId, customer, orderItems, OrderStatus.RECEIVED, new Price(total))
-	}
+  static create(customer: Customer, orderItems: OrderItem[]): Order {
+    const orderId = randomUUID();
+    const total = Order.calculateTotal(orderItems);
+    return new Order(
+      orderId,
+      customer,
+      orderItems,
+      OrderStatus.AWAITING_PAYMENT,
+      new Price(total)
+    );
+  }
 
-	static restore(orderId: string, customer: Customer, orderItems: OrderItem[], status: OrderStatus): Order {
-		const total = Order.calculateTotal(orderItems)
-		return new Order(orderId, customer, orderItems, status, new Price(total))
-	}
+  static restore(
+    orderId: string,
+    customer: Customer,
+    orderItems: OrderItem[],
+    status: OrderStatus
+  ): Order {
+    const total = Order.calculateTotal(orderItems);
+    return new Order(orderId, customer, orderItems, status, new Price(total));
+  }
 
-	private static calculateTotal(orderItems: OrderItem[]): number {
-		return orderItems.reduce((acc, item) => acc + item.getPrice(), 0)
-	}
+  private static calculateTotal(orderItems: OrderItem[]): number {
+    return orderItems.reduce((acc, item) => acc + item.getPrice(), 0);
+  }
 
-	getCustomer = () => this.customer
+  getCustomer = () => this.customer;
 
-	getOrderItems = () => this.orderItems
+  getOrderItems = () => this.orderItems;
 
-	setOrderItems = (orderItems: OrderItem[]) => {
-		if (orderItems.length === 0) {
-			throw new DomainError('Order must have at least one item')
-		}
-		this.orderItems = orderItems
-		this.total = new Price(Order.calculateTotal(orderItems))
-	}
+  setOrderItems = (orderItems: OrderItem[]) => {
+    if (orderItems.length === 0) {
+      throw new DomainError("Order must have at least one item");
+    }
+    this.orderItems = orderItems;
+    this.total = new Price(Order.calculateTotal(orderItems));
+  };
 
-	getStatus = () => this.status
+  getStatus = () => this.status;
 
-	getTotal = () => this.total.getValue()
+  getTotal = () => this.total.getValue();
 
-	private canTransitionTo(status: OrderStatus): boolean {
-		const transitions: Record<OrderStatus, OrderStatus[]> = {
-			[OrderStatus.RECEIVED]: [OrderStatus.IN_PREPARATION],
-			[OrderStatus.IN_PREPARATION]: [OrderStatus.READY],
-			[OrderStatus.READY]: [OrderStatus.COMPLETED],
-			[OrderStatus.COMPLETED]: []
-		}
-		return transitions[this.status].includes(status)
-	}
+  private canTransitionTo(status: OrderStatus): boolean {
+    const transitions: Record<OrderStatus, OrderStatus[]> = {
+      [OrderStatus.AWAITING_PAYMENT]: [OrderStatus.PAID],
+      [OrderStatus.PAID]: [OrderStatus.RECEIVED],
+      [OrderStatus.RECEIVED]: [OrderStatus.IN_PREPARATION],
+      [OrderStatus.IN_PREPARATION]: [OrderStatus.READY],
+      [OrderStatus.READY]: [OrderStatus.COMPLETED],
+      [OrderStatus.COMPLETED]: [],
+    };
+    return transitions[this.status].includes(status);
+  }
 
-	private transitionTo(status: OrderStatus) {
-		if (!this.canTransitionTo(status)) {
-			throw new DomainError(`Can't transition from ${this.status} to ${status}`)
-		}
-		this.status = status
-	}
+  private transitionTo(status: OrderStatus) {
+    if (!this.canTransitionTo(status)) {
+      throw new DomainError(
+        `Can't transition from ${this.status} to ${status}`
+      );
+    }
+    this.status = status;
+  }
 
-	prepare() {
-		this.transitionTo(OrderStatus.IN_PREPARATION)
-	}
+  pay() {
+    this.transitionTo(OrderStatus.PAID);
+  }
 
-	ready() {
-		this.transitionTo(OrderStatus.READY)
-	}
+  receive() {
+    this.transitionTo(OrderStatus.RECEIVED);
+  }
 
-	complete() {
-		this.transitionTo(OrderStatus.COMPLETED)
-	}
+  prepare() {
+    this.transitionTo(OrderStatus.IN_PREPARATION);
+  }
 
-	toJSON() {
-		return {
-			orderId: this.orderId,
-			status: this.status,
-			total: this.total.getValue(),
-			customer: this.customer.toJSON(),
-			orderItems: this.orderItems.map((item) => item.toJSON())
-		}
-	}
+  ready() {
+    this.transitionTo(OrderStatus.READY);
+  }
+
+  complete() {
+    this.transitionTo(OrderStatus.COMPLETED);
+  }
+
+  toJSON() {
+    return {
+      orderId: this.orderId,
+      status: this.status,
+      total: this.total.getValue(),
+      customer: this.customer.toJSON(),
+      orderItems: this.orderItems.map((item) => item.toJSON()),
+    };
+  }
 }
