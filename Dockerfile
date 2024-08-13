@@ -5,7 +5,7 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-USER node
+USER root
 WORKDIR /home/node
 
 COPY package.json pnpm-lock.yaml ./
