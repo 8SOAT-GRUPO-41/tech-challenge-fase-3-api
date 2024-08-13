@@ -1,7 +1,5 @@
 # FIAP TECH Challenge - Fase 1
 
-## Grupo 41
-
 ## Descrição do Projeto
 
 Este projeto, desenvolvido pelo **Grupo 41**, visa a criação de um sistema de gestão operacional para uma lanchonete. O sistema será responsável por gerenciar pedidos, produtos e clientes, proporcionando uma solução eficiente e organizada para as operações diárias da lanchonete.
@@ -14,6 +12,7 @@ Para acessar o quadro do projeto no Miro, utilize o seguinte link:
 
 - Desenvolver um sistema capaz de gerenciar eficientemente os pedidos da lanchonete.
 - Gerenciar informações dos clientes para um atendimento mais personalizado.
+- Facilitar o gerenciamento dos produtos disponíveis na lanchonete.
 
 ## Como Iniciar o Projeto Localmente
 
