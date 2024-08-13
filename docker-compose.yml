@@ -25,6 +25,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: fiap-tech-challenge-fase-1-api
+    command: npm run start
     ports:
       - "3000:3000"
     environment:
