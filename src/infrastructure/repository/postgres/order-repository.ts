@@ -163,7 +163,7 @@ export class OrderRepositoryPostgres implements OrderRepository {
 	JOIN 
 		products p ON op.product_id = p.product_id
 	WHERE
-		order_id = $1
+		o.order_id = $1
 	GROUP BY
 		o.order_id, c.customer_id, o.status, o.created_at, c.name, c.email, c.cpf`;
     const params = [orderId];
