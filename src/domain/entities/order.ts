@@ -72,6 +72,9 @@ export class Order {
   }
 
   private transitionTo(status: OrderStatus) {
+    if (this.status === status) {
+      throw new DomainError(`The order is already in the ${status} status`);
+    }
     if (!this.canTransitionTo(status)) {
       throw new DomainError(
         `Can't transition from ${this.status} to ${status}`
