@@ -1,4 +1,4 @@
-# FIAP TECH Challenge - Fase 1
+# FIAP TECH Challenge - Fase 1 - 8SOAT - Grupo 41
 
 ## Descrição do Projeto
 
