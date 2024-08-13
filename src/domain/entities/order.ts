@@ -55,7 +55,7 @@ export class Order {
 			[OrderStatus.READY]: [OrderStatus.COMPLETED],
 			[OrderStatus.COMPLETED]: []
 		}
-		return transitions[this.status].includes(status) ?? false
+		return transitions[this.status].includes(status)
 	}
 
 	private transitionTo(status: OrderStatus) {
