@@ -35,7 +35,7 @@ describe(LoadProductsByCategory.name, () => {
 
 	it('should return an empty list if no products are found', async () => {
 		const { sut, productRepositorySpy } = makeSut()
-		productRepositorySpy.findByCategoryResult = Promise.resolve([])
+		productRepositorySpy.findByCategoryResult = []
 
 		const products = await sut.execute(productMock.getCategory())
 

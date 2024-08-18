@@ -9,8 +9,8 @@ export class ProductRepositorySpy implements ProductRepository {
 	updateParams?: Product
 	findByCategoryParams?: string
 
-	findByIdResult = Promise.resolve(null)
-	findByCategoryResult = Promise.resolve([productMock])
+	findByIdResult: Product | null = null
+	findByCategoryResult = [productMock]
 
 	async save(product: Product): Promise<void> {
 		this.saveParams = product
