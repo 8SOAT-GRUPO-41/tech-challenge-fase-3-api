@@ -222,4 +222,17 @@ describe(Order.name, () => {
 
     expect(order.getTotal()).toBe(50);
   });
+
+  it("should throw when trying to transition to the same current status", () => {
+    const order = Order.restore(
+      "any_id",
+      validCustomer,
+      [validOrderItem],
+      OrderStatus.READY
+    );
+
+    expect(() => order.ready()).toThrow(
+      new DomainError(`The order is already in the ${OrderStatus.READY} status`)
+    );
+  })
 });
