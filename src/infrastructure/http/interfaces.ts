@@ -14,7 +14,7 @@ export interface HttpRequest<B = unknown, Q = unknown, P = unknown> {
 	headers?: Record<string, unknown>
 }
 
-export interface HttpController {
+export interface Controller {
 	handle(request: HttpRequest): Promise<HttpResponse>
 }
 
@@ -33,6 +33,6 @@ type Schema = {
 export interface HttpRoute {
 	method: 'get' | 'post' | 'put' | 'delete' | 'patch'
 	url: string
-	handler: () => HttpController
+	handler: () => Controller
 	schema?: Schema
 }

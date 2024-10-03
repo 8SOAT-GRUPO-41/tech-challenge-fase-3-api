@@ -1,11 +1,11 @@
 import { LoadCustomerByCpfController, CreateCustomerController } from '@/infrastructure/controllers'
 import { makeCreateCustomer, makeLoadCustomerByCpf } from '@/infrastructure/factories/usecases/customer'
-import type { HttpController } from '@/infrastructure/http/interfaces'
+import type { Controller } from '@/infrastructure/http/interfaces'
 
-export const makeLoadCustomerByCpfController = (): HttpController => {
+export const makeLoadCustomerByCpfController = (): Controller => {
 	return new LoadCustomerByCpfController(makeLoadCustomerByCpf())
 }
 
-export const makeCreateCustomerController = (): HttpController => {
+export const makeCreateCustomerController = (): Controller => {
 	return new CreateCustomerController(makeCreateCustomer())
 }

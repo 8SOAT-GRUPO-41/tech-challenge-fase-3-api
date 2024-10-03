@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@/infrastructure/http/helper'
-import type { HttpRequest, HttpResponse, HttpController } from '@/infrastructure/http/interfaces'
+import type { HttpRequest, HttpResponse, Controller } from '@/infrastructure/http/interfaces'
 import type { OrderStatus } from '@/domain/enums'
 import type { UpdateOrderStatus } from '@/application/usecases/order'
 
@@ -8,7 +8,7 @@ interface FakeCheckoutInput {
 	status: OrderStatus
 }
 
-export class FakeCheckoutController implements HttpController {
+export class FakeCheckoutController implements Controller {
 	constructor(private readonly updateOrderUseCase: UpdateOrderStatus) {}
 
 	async handle(request: HttpRequest<FakeCheckoutInput>): Promise<HttpResponse> {

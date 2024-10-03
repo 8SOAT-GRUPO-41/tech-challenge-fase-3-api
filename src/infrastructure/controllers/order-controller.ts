@@ -1,14 +1,14 @@
 import type { CreateOrder, LoadOrders } from '@/application/usecases/order'
 import type { HttpRequest, HttpResponse } from '@/infrastructure/http/interfaces'
 import { HttpStatusCode } from '@/infrastructure/http/helper'
-import type { HttpController } from '@/infrastructure/http/interfaces'
+import type { Controller } from '@/infrastructure/http/interfaces'
 
 interface CreateOrderInput {
 	customerId: string
 	products: { productId: string; quantity: number }[]
 }
 
-export class CreateOrderController implements HttpController {
+export class CreateOrderController implements Controller {
 	constructor(private readonly createOrderUseCase: CreateOrder) {}
 
 	async handle(request: HttpRequest<CreateOrderInput>): Promise<HttpResponse> {
@@ -21,7 +21,7 @@ export class CreateOrderController implements HttpController {
 	}
 }
 
-export class LoadOrdersController implements HttpController {
+export class LoadOrdersController implements Controller {
 	constructor(private readonly loadOrdersUseCase: LoadOrders) {}
 
 	async handle(_request: HttpRequest): Promise<HttpResponse> {

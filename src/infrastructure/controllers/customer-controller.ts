@@ -1,7 +1,7 @@
 import type { CreateCustomer, LoadCustomerByCpf } from '@/application/usecases/customer'
 import type { HttpRequest, HttpResponse } from '@/infrastructure/http/interfaces'
 import { HttpStatusCode } from '@/infrastructure/http/helper'
-import type { HttpController } from '@/infrastructure/http/interfaces'
+import type { Controller } from '@/infrastructure/http/interfaces'
 
 interface CreateCustomerInput {
 	name: string
@@ -9,7 +9,7 @@ interface CreateCustomerInput {
 	cpf: string
 }
 
-export class CreateCustomerController implements HttpController {
+export class CreateCustomerController implements Controller {
 	constructor(private readonly createCustomerUseCase: CreateCustomer) {}
 
 	async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -22,7 +22,7 @@ export class CreateCustomerController implements HttpController {
 	}
 }
 
-export class LoadCustomerByCpfController implements HttpController {
+export class LoadCustomerByCpfController implements Controller {
 	constructor(private readonly loadCustomerByCpfUseCase: LoadCustomerByCpf) {}
 
 	async handle(request: HttpRequest<null, null, { cpf: string }>): Promise<HttpResponse> {

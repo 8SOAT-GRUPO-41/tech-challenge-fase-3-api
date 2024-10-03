@@ -7,7 +7,7 @@ import type {
 import type { ProductCategory } from '@/domain/enums'
 import type { HttpRequest, HttpResponse } from '@/infrastructure/http/interfaces'
 import { HttpStatusCode } from '@/infrastructure/http/helper'
-import type { HttpController } from '@/infrastructure/http/interfaces'
+import type { Controller } from '@/infrastructure/http/interfaces'
 
 interface CreateProductInput {
 	name: string
@@ -20,7 +20,7 @@ interface UpdateProductInput extends Partial<CreateProductInput> {
 	productId: string
 }
 
-export class CreateProductController implements HttpController {
+export class CreateProductController implements Controller {
 	constructor(private readonly createProductUseCase: CreateProduct) {}
 
 	async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -33,7 +33,7 @@ export class CreateProductController implements HttpController {
 	}
 }
 
-export class DeleteProductController implements HttpController {
+export class DeleteProductController implements Controller {
 	constructor(private readonly deleteProductUseCase: DeleteProduct) {}
 
 	async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -46,7 +46,7 @@ export class DeleteProductController implements HttpController {
 	}
 }
 
-export class UpdateProductController implements HttpController {
+export class UpdateProductController implements Controller {
 	constructor(private readonly updateProductUseCase: UpdateProduct) {}
 
 	async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -61,7 +61,7 @@ export class UpdateProductController implements HttpController {
 	}
 }
 
-export class LoadProductsByCategoryController implements HttpController {
+export class LoadProductsByCategoryController implements Controller {
 	constructor(private readonly loadProductsByCategoryUseCase: LoadProductsByCategory) {}
 
 	async handle(request: HttpRequest<null, null, { category: ProductCategory }>): Promise<HttpResponse> {
