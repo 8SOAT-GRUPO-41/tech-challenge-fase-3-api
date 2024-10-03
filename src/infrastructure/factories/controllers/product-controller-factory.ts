@@ -1,16 +1,29 @@
-import { ProductController } from '@/infrastructure/http/controllers/product-controller'
+import {
+	CreateProductController,
+	DeleteProductController,
+	LoadProductsByCategoryController,
+	UpdateProductController
+} from '@/infrastructure/http/controllers/product-controller'
 import {
 	makeCreateProduct,
 	makeDeleteProduct,
 	makeUpdateProduct,
 	makeLoadProductsByCategory
 } from '@/infrastructure/factories/usecases/product'
+import type { HttpController } from '@/infrastructure/http/interfaces/controller'
 
-export const makeProductController = (): ProductController => {
-	return new ProductController(
-		makeCreateProduct(),
-		makeDeleteProduct(),
-		makeUpdateProduct(),
-		makeLoadProductsByCategory()
-	)
+export const makeCreateProductController = (): HttpController => {
+	return new CreateProductController(makeCreateProduct())
+}
+
+export const makeDeleteProductController = (): HttpController => {
+	return new DeleteProductController(makeDeleteProduct())
+}
+
+export const makeUpdateProductController = (): HttpController => {
+	return new UpdateProductController(makeUpdateProduct())
+}
+
+export const makeLoadProductsByCategoryController = (): HttpController => {
+	return new LoadProductsByCategoryController(makeLoadProductsByCategory())
 }

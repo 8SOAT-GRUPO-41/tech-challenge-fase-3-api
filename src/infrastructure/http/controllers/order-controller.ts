@@ -1,26 +1,34 @@
-import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { CreateOrder, LoadOrders } from '@/application/usecases/order'
+import type { HttpRequest, HttpResponse } from '@/infrastructure/http/interfaces'
 import { HttpStatusCode } from '@/infrastructure/http/helper'
-import type { LoadOrders, CreateOrder } from '@/application/usecases/order'
+import type { HttpController } from '@/infrastructure/http/interfaces/controller'
 
-type CreateOrderInput = {
+interface CreateOrderInput {
 	customerId: string
 	products: { productId: string; quantity: number }[]
 }
 
-export class OrderController {
-	constructor(
-		private readonly loadOrdersUseCase: LoadOrders,
-		private readonly createOrderUseCase: CreateOrder
-	) {}
+export class CreateOrderController implements HttpController {
+	constructor(private readonly createOrderUseCase: CreateOrder) {}
 
-	async loadOrders(_request: FastifyRequest, reply: FastifyReply) {
-		const result = await this.loadOrdersUseCase.execute()
-		return reply.status(HttpStatusCode.OK).send(result.map((order) => order.toJSON()))
+	async handle(request: HttpRequest<CreateOrderInput>): Promise<HttpResponse> {
+		const input = request.body
+		const result = await this.createOrderUseCase.execute(input)
+		return {
+			statusCode: HttpStatusCode.CREATED,
+			body: result.toJSON()
+		}
 	}
+}
 
-	async createOrder(request: FastifyRequest, reply: FastifyReply) {
-		const { customerId, products } = request.body as CreateOrderInput
-		const result = await this.createOrderUseCase.execute({ customerId, products })
-		return reply.status(HttpStatusCode.CREATED).send(result.toJSON())
+export class LoadOrdersController implements HttpController {
+	constructor(private readonly loadOrdersUseCase: LoadOrders) {}
+
+	async handle(_request: HttpRequest): Promise<HttpResponse> {
+		const result = await this.loadOrdersUseCase.execute()
+		return {
+			statusCode: HttpStatusCode.OK,
+			body: result.map((order) => order.toJSON())
+		}
 	}
 }

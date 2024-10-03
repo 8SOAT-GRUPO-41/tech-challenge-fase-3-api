@@ -1,11 +1,13 @@
 import type { FastifyPluginAsync } from 'fastify'
-import { makeCustomerController } from '@/infrastructure/factories/controllers'
+import { makeCreateCustomerController, makeLoadCustomerByCpfController } from '@/infrastructure/factories/controllers'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 import { ErrorCodes } from '@/infrastructure/http/error-handler'
 import { customerSchema, customerSchemaWithoutId } from '@/infrastructure/swagger/schemas/customer'
+import { adaptFastifyRoute } from '../fastify-adapter'
 
 export const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
-	const customerController = makeCustomerController()
+	const loadCustomerController = makeLoadCustomerByCpfController()
+	const createCustomerController = makeCreateCustomerController()
 
 	server.post(
 		'',
@@ -37,7 +39,7 @@ export const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise
 				}
 			}
 		},
-		customerController.createCustomer.bind(customerController)
+		adaptFastifyRoute(createCustomerController)
 	)
 
 	server.get(
@@ -60,6 +62,6 @@ export const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise
 				}
 			}
 		},
-		customerController.loadCustomerByCpf.bind(customerController)
+		adaptFastifyRoute(loadCustomerController)
 	)
 }

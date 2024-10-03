@@ -1,13 +1,15 @@
 import type { FastifyPluginAsync } from 'fastify'
-import { makeOrderController } from '@/infrastructure/factories/controllers'
+import { makeLoadOrdersController, makeCreateOrderController } from '@/infrastructure/factories/controllers'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 import { ErrorCodes } from '@/infrastructure/http/error-handler'
 import { orderItemSchema } from '@/infrastructure/swagger/schemas/order-item'
 import { orderSchema } from '@/infrastructure/swagger/schemas/order'
 import { customerSchema } from '@/infrastructure/swagger/schemas/customer'
+import { adaptFastifyRoute } from '../fastify-adapter'
 
 export const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
-	const orderController = makeOrderController()
+	const loadOrdersController = makeLoadOrdersController()
+	const createOrderController = makeCreateOrderController()
 
 	server.get(
 		'',
@@ -24,7 +26,7 @@ export const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<vo
 				}
 			}
 		},
-		orderController.loadOrders.bind(orderController)
+		adaptFastifyRoute(loadOrdersController)
 	)
 
 	server.post(
@@ -58,6 +60,6 @@ export const orderRoutes: FastifyPluginAsync = async (server, _opts): Promise<vo
 				}
 			}
 		},
-		orderController.createOrder.bind(orderController)
+		adaptFastifyRoute(createOrderController)
 	)
 }

@@ -1,6 +1,7 @@
-import type { FastifyReply, FastifyRequest } from 'fastify'
-import { HttpStatusCode } from '@/infrastructure/http/helper'
 import type { CreateCustomer, LoadCustomerByCpf } from '@/application/usecases/customer'
+import type { HttpRequest, HttpResponse } from '@/infrastructure/http/interfaces'
+import { HttpStatusCode } from '@/infrastructure/http/helper'
+import type { HttpController } from '@/infrastructure/http/interfaces/controller'
 
 interface CreateCustomerInput {
 	name: string
@@ -8,21 +9,28 @@ interface CreateCustomerInput {
 	cpf: string
 }
 
-export class CustomerController {
-	constructor(
-		private readonly createCustomerUseCase: CreateCustomer,
-		private readonly loadCustomerByCpfUseCase: LoadCustomerByCpf
-	) {}
+export class CreateCustomerController implements HttpController {
+	constructor(private readonly createCustomerUseCase: CreateCustomer) {}
 
-	async createCustomer(request: FastifyRequest, reply: FastifyReply) {
+	async handle(request: HttpRequest): Promise<HttpResponse> {
 		const input = request.body as CreateCustomerInput
 		const result = await this.createCustomerUseCase.execute(input)
-		return reply.status(HttpStatusCode.CREATED).send(result.toJSON())
+		return {
+			statusCode: HttpStatusCode.CREATED,
+			body: result.toJSON()
+		}
 	}
+}
 
-	async loadCustomerByCpf(request: FastifyRequest, reply: FastifyReply) {
-		const params = request.params as { cpf: string }
+export class LoadCustomerByCpfController implements HttpController {
+	constructor(private readonly loadCustomerByCpfUseCase: LoadCustomerByCpf) {}
+
+	async handle(request: HttpRequest<null, null, { cpf: string }>): Promise<HttpResponse> {
+		const params = request.params
 		const result = await this.loadCustomerByCpfUseCase.execute(params.cpf)
-		return reply.status(HttpStatusCode.OK).send(result.toJSON())
+		return {
+			statusCode: HttpStatusCode.OK,
+			body: result.toJSON()
+		}
 	}
 }

@@ -1,6 +1,7 @@
-import { PaymentController } from "@/infrastructure/http/controllers/payment-controller";
-import { makeUpdateOrderStatus } from "@/infrastructure/factories/usecases/order";
+import { FakeCheckoutController } from '@/infrastructure/http/controllers/payment-controller'
+import { makeUpdateOrderStatus } from '@/infrastructure/factories/usecases/order'
+import type { HttpController } from '@/infrastructure/http/interfaces'
 
-export const makePaymentController = (): PaymentController => {
-  return new PaymentController(makeUpdateOrderStatus());
-};
+export const makeFakeCheckoutController = (): HttpController => {
+	return new FakeCheckoutController(makeUpdateOrderStatus())
+}

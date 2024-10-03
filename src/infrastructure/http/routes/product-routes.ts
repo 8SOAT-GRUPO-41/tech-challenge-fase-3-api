@@ -1,11 +1,20 @@
 import type { FastifyPluginAsync } from 'fastify'
-import { makeProductController } from '@/infrastructure/factories/controllers'
+import {
+	makeCreateProductController,
+	makeLoadProductsByCategoryController,
+	makeDeleteProductController,
+	makeUpdateProductController
+} from '@/infrastructure/factories/controllers'
 import { ErrorCodes } from '@/infrastructure/http/error-handler'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 import { productSchema, productSchemaWithoutId } from '@/infrastructure/swagger/schemas/product'
+import { adaptFastifyRoute } from '../fastify-adapter'
 
 export const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
-	const productController = makeProductController()
+	const createProductController = makeCreateProductController()
+	const deleteProductController = makeDeleteProductController()
+	const updateProductController = makeUpdateProductController()
+	const loadProductsByCategoryController = makeLoadProductsByCategoryController()
 
 	server.post(
 		'',
@@ -26,7 +35,7 @@ export const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<
 				}
 			}
 		},
-		productController.createProduct.bind(productController)
+		adaptFastifyRoute(createProductController)
 	)
 
 	server.delete(
@@ -49,7 +58,7 @@ export const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<
 				}
 			}
 		},
-		productController.deleteProduct.bind(productController)
+		adaptFastifyRoute(deleteProductController)
 	)
 
 	server.patch(
@@ -81,7 +90,7 @@ export const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<
 				}
 			}
 		},
-		productController.updateProduct.bind(productController)
+		adaptFastifyRoute(updateProductController)
 	)
 
 	server.get(
@@ -107,6 +116,6 @@ export const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<
 				}
 			}
 		},
-		productController.loadProductsByCategory.bind(productController)
+		adaptFastifyRoute(loadProductsByCategoryController)
 	)
 }
