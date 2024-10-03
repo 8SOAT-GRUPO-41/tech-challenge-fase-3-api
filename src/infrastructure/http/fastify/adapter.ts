@@ -1,5 +1,5 @@
 import type { FastifyReply, FastifyRequest, RouteHandlerMethod } from 'fastify'
-import type { Controller } from '@/infrastructure/http/interfaces'
+import type { Controller } from '@/infrastructure/controllers/interfaces'
 import { HttpErrorHandler } from '@/infrastructure/http/error-handler'
 
 const adaptFastifyErrorHandler = (error: unknown, request: FastifyRequest, reply: FastifyReply): FastifyReply => {

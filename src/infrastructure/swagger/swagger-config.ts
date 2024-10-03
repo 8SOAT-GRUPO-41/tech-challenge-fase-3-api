@@ -9,6 +9,7 @@ const swaggerConfig: Omit<OpenAPIV3.Document, 'paths'> = {
 		contact: {
 			name: 'Lanchonete G41',
 			email: 'lanchoneteg41@gmail.com'
+			
 		}
 	},
 	servers: [

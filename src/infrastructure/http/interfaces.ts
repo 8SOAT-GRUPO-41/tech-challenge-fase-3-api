@@ -1,3 +1,5 @@
+import type { Controller } from '../controllers/interfaces'
+
 export interface HttpServer {
 	listen(port: number): Promise<void>
 }
@@ -12,10 +14,6 @@ export interface HttpRequest<B = unknown, Q = unknown, P = unknown> {
 	query: Q
 	params: P
 	headers?: Record<string, unknown>
-}
-
-export interface Controller {
-	handle(request: HttpRequest): Promise<HttpResponse>
 }
 
 type Schema = {

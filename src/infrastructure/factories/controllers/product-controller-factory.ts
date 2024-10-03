@@ -10,7 +10,7 @@ import {
 	makeUpdateProduct,
 	makeLoadProductsByCategory
 } from '@/infrastructure/factories/usecases/product'
-import type { Controller } from '@/infrastructure/http/interfaces'
+import type { Controller } from '@/infrastructure/controllers/interfaces'
 
 export const makeCreateProductController = (): Controller => {
 	return new CreateProductController(makeCreateProduct())

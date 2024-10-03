@@ -1,7 +1,7 @@
 import type { CreateOrder, LoadOrders } from '@/application/usecases/order'
 import type { HttpRequest, HttpResponse } from '@/infrastructure/http/interfaces'
 import { HttpStatusCode } from '@/infrastructure/http/helper'
-import type { Controller } from '@/infrastructure/http/interfaces'
+import type { Controller } from '@/infrastructure/controllers/interfaces'
 
 interface CreateOrderInput {
 	customerId: string
