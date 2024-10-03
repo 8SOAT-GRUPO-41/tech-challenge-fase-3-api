@@ -10,7 +10,7 @@ import {
 	makeUpdateProduct,
 	makeLoadProductsByCategory
 } from '@/infrastructure/factories/usecases/product'
-import type { HttpController } from '@/infrastructure/http/interfaces/controller'
+import type { HttpController } from '@/infrastructure/http/interfaces'
 
 export const makeCreateProductController = (): HttpController => {
 	return new CreateProductController(makeCreateProduct())

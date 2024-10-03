@@ -1,7 +1,7 @@
 import type { CreateCustomer, LoadCustomerByCpf } from '@/application/usecases/customer'
 import type { HttpRequest, HttpResponse } from '@/infrastructure/http/interfaces'
 import { HttpStatusCode } from '@/infrastructure/http/helper'
-import type { HttpController } from '@/infrastructure/http/interfaces/controller'
+import type { HttpController } from '@/infrastructure/http/interfaces'
 
 interface CreateCustomerInput {
 	name: string

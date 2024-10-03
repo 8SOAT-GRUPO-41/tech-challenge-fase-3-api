@@ -5,10 +5,10 @@ import {
 	makeDeleteProductController,
 	makeUpdateProductController
 } from '@/infrastructure/factories/controllers'
-import { ErrorCodes } from '@/infrastructure/http/error-handler'
+import { ErrorCodes } from '@/domain/enums'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 import { productSchema, productSchemaWithoutId } from '@/infrastructure/swagger/schemas/product'
-import { adaptFastifyRoute } from '../fastify-adapter'
+import { adaptFastifyRoute } from '../fastify/adapter'
 
 export const productRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
 	const createProductController = makeCreateProductController()

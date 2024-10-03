@@ -1,9 +1,9 @@
 import type { FastifyPluginAsync } from 'fastify'
 import { makeFakeCheckoutController } from '@/infrastructure/factories/controllers'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
-import { ErrorCodes } from '@/infrastructure/http/error-handler'
+import { ErrorCodes } from '@/domain/enums'
 import { orderSchema } from '@/infrastructure/swagger/schemas/order'
-import { adaptFastifyRoute } from '../fastify-adapter'
+import { adaptFastifyRoute } from '../fastify/adapter'
 
 export const paymentRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
 	const fakeCheckoutController = makeFakeCheckoutController()

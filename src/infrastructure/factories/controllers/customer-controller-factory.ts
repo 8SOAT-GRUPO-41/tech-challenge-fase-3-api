@@ -1,6 +1,6 @@
 import { LoadCustomerByCpfController, CreateCustomerController } from '@/infrastructure/controllers'
 import { makeCreateCustomer, makeLoadCustomerByCpf } from '@/infrastructure/factories/usecases/customer'
-import type { HttpController } from '@/infrastructure/http/interfaces/controller'
+import type { HttpController } from '@/infrastructure/http/interfaces'
 
 export const makeLoadCustomerByCpfController = (): HttpController => {
 	return new LoadCustomerByCpfController(makeLoadCustomerByCpf())

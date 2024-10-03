@@ -9,3 +9,7 @@ export interface HttpRequest<B = unknown, Q = unknown, P = unknown> {
 	params: P
 	headers?: Record<string, unknown>
 }
+
+export interface HttpController {
+	handle(request: HttpRequest): Promise<HttpResponse>
+}

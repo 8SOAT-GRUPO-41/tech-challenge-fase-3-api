@@ -1,5 +1,5 @@
 import type { RouteHandlerMethod } from 'fastify'
-import type { HttpController } from './interfaces/controller'
+import type { HttpController } from '@/infrastructure/http/interfaces'
 
 export const adaptFastifyRoute = (controller: HttpController): RouteHandlerMethod => {
 	return async (request, reply) => {

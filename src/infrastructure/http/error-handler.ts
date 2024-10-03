@@ -1,16 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { HttpStatusCode } from '@/infrastructure/http/helper'
 import { DomainError, NotFoundError, InvalidParamError, ConflictError } from '@/domain/errors'
-
-export enum ErrorCodes {
-	NOT_FOUND = 'NOT_FOUND_ERROR',
-	INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
-	BAD_REQUEST = 'BAD_REQUEST_ERROR',
-	DOMAIN_ERROR = 'DOMAIN_ERROR',
-	CONFLICT_ERROR = 'CONFLICT_ERROR',
-	DUPLICATE_ENTITY = 'DUPLICATE_ENTITY_ERROR',
-	UNPROCESSABLE_ENTITY = 'UNPROCESSABLE_ENTITY_ERROR'
-}
+import { ErrorCodes } from '@/domain/enums'
 
 const createErrorResponse = (code: ErrorCodes, message: string, status: number, reply: FastifyReply): void => {
 	reply.status(status).send({
@@ -25,12 +16,12 @@ const errorHandler = (error: unknown, request: FastifyRequest, reply: FastifyRep
 	request.log.error(error)
 
 	if (error instanceof NotFoundError) {
-		createErrorResponse(ErrorCodes.NOT_FOUND, error.message, HttpStatusCode.NOT_FOUND, reply)
+		createErrorResponse(error.code, error.message, HttpStatusCode.NOT_FOUND, reply)
 		return
 	}
 
 	if (error instanceof DomainError) {
-		createErrorResponse(ErrorCodes.DOMAIN_ERROR, error.message, HttpStatusCode.UNPROCESSABLE_ENTITY, reply)
+		createErrorResponse(error.code, error.message, HttpStatusCode.UNPROCESSABLE_ENTITY, reply)
 		return
 	}
 
@@ -45,12 +36,12 @@ const errorHandler = (error: unknown, request: FastifyRequest, reply: FastifyRep
 	}
 
 	if (error instanceof InvalidParamError) {
-		createErrorResponse(ErrorCodes.UNPROCESSABLE_ENTITY, error.message, HttpStatusCode.UNPROCESSABLE_ENTITY, reply)
+		createErrorResponse(error.code, error.message, HttpStatusCode.UNPROCESSABLE_ENTITY, reply)
 		return
 	}
 
 	if (error instanceof ConflictError) {
-		createErrorResponse(ErrorCodes.CONFLICT_ERROR, error.message, HttpStatusCode.CONFLICT, reply)
+		createErrorResponse(error.code, error.message, HttpStatusCode.CONFLICT, reply)
 		return
 	}
 

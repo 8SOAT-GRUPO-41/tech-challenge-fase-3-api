@@ -1,9 +1,9 @@
 import type { FastifyPluginAsync } from 'fastify'
 import { makeCreateCustomerController, makeLoadCustomerByCpfController } from '@/infrastructure/factories/controllers'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
-import { ErrorCodes } from '@/infrastructure/http/error-handler'
+import { ErrorCodes } from '@/domain/enums'
 import { customerSchema, customerSchemaWithoutId } from '@/infrastructure/swagger/schemas/customer'
-import { adaptFastifyRoute } from '../fastify-adapter'
+import { adaptFastifyRoute } from '../fastify/adapter'
 
 export const customerRoutes: FastifyPluginAsync = async (server, _opts): Promise<void> => {
 	const loadCustomerController = makeLoadCustomerByCpfController()
