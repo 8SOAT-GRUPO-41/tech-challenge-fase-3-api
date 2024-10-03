@@ -3,7 +3,7 @@ import {
 	DeleteProductController,
 	LoadProductsByCategoryController,
 	UpdateProductController
-} from '@/infrastructure/http/controllers/product-controller'
+} from '@/infrastructure/controllers/product-controller'
 import {
 	makeCreateProduct,
 	makeDeleteProduct,
