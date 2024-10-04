@@ -1,4 +1,4 @@
-import { makeFakeCheckoutController } from '@/infrastructure/factories/controllers'
+import { makeCreatePaymentController, makeFakeCheckoutController } from '@/infrastructure/factories/controllers'
 import { errorResponseSchema } from '@/infrastructure/swagger/error-response-schema'
 import { ErrorCodes } from '@/domain/enums'
 import { orderSchema } from '@/infrastructure/swagger/schemas/order'
@@ -8,6 +8,30 @@ export const paymentRoutes = [
 	{
 		method: 'post',
 		url: '/payments',
+		handler: makeCreatePaymentController,
+		schema: {
+			tags: ['Payments'],
+			summary: 'Create payment',
+			body: {
+				type: 'object',
+				properties: {
+					orderId: { type: 'string', format: 'uuid' }
+				},
+				required: ['orderId']
+			},
+			response: {
+				200: {
+					type: 'string'
+				},
+				400: errorResponseSchema(400, ErrorCodes.BAD_REQUEST),
+				422: errorResponseSchema(422, ErrorCodes.UNPROCESSABLE_ENTITY),
+				500: errorResponseSchema(500, ErrorCodes.INTERNAL_SERVER_ERROR)
+			}
+		}
+	},
+	{
+		method: 'post',
+		url: '/payments/fake-checkout',
 		handler: makeFakeCheckoutController,
 		schema: {
 			tags: ['Payments'],
