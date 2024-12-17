@@ -1,6 +1,5 @@
 api:
   repository: rafaelvmasc/lanchonete-api
-  tag: 2.0.0
   pullPolicy: IfNotPresent
   domain: yeee.app
   subdomain: lanchonete
