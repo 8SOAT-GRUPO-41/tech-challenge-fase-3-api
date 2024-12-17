@@ -12,7 +12,7 @@ import type { HttpRoute } from '@/infrastructure/http/interfaces'
 export const productRoutes = [
   {
     method: 'post',
-    url: '/products',
+    url: '/admin/products',
     handler: makeCreateProductController,
     schema: {
       tags: ['Products'],
@@ -32,7 +32,7 @@ export const productRoutes = [
   },
   {
     method: 'delete',
-    url: '/products/:id',
+    url: '/admin/products/:id',
     handler: makeDeleteProductController,
     schema: {
       tags: ['Products'],
@@ -53,7 +53,7 @@ export const productRoutes = [
   },
   {
     method: 'patch',
-    url: '/products/:id',
+    url: '/admin/products/:id',
     handler: makeUpdateProductController,
     schema: {
       tags: ['Products'],
