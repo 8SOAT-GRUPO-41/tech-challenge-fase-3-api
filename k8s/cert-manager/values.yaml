@@ -1,8 +1,0 @@
-cert-manager:
-  crds:
-    enabled: true
-    keep: true
-
-issuer:
-  enabled: true
-  email: rvmascavalcante@gmail.com
