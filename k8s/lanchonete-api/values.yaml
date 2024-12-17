@@ -7,7 +7,9 @@ api:
   service:
     type: ClusterIP
     port: 3000
-
+  env:
+    DB_PORT: 5432
+    PORT: 3000
 autoscaling:
   enabled: true
   minReplicas: 1
