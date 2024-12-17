@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: lanchonete-api
-          image: {{ .Values.api.repository }}:{{ .Values.api.tag }}
+          image: {{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}
           ports:
             - containerPort: {{ .Values.api.service.port }}
           resources:
