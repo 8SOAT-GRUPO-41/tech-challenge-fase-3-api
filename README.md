@@ -1,4 +1,4 @@
-# FIAP TECH Challenge - Fase 2 - 8SOAT - Grupo 41
+# 8SOAT FIAP Tech Challenge | Grupo 41 | API
 
 ## Descrição do Projeto
 
@@ -24,8 +24,4 @@ docker-compose up
 
 ## Arquitetura
 
-![Arquitetura](diagrams/k8s-architecture.png)
-
-## Video de Apresentação
-
-[Assista ao vídeo](https://youtu.be/aS6Rowws_KU)
+![Arquitetura](diagrams/aws-architecture.png)

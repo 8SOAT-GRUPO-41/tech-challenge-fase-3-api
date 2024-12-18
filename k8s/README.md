@@ -11,17 +11,9 @@
 ## Passo a passo
 
 1. Acesse a pasta `k8s`
-2. Instale o chart **cert-manager**:
-```bash
-helm install cert-manager ./cert-manager --namespace cert-manager --create-namespace 
-```
 
-3. Instale o chart **nginx-ingress**:
-```bash
-helm install ingress-nginx ingress-nginx --namespace ingress-nginx --create-namespace
-```
+2. Instale o chart **lanchonete-api**:
 
-4. Instale o chart **lanchonete-api**:
 ```bash
 helm install lanchonete-api ./lanchonete-api
 ```
